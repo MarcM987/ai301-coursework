@@ -23,19 +23,121 @@ MarcM987
 
 **Claim comment**
 
-[Link to the comment where you claimed the issue. Use the comment's own permalink, not the
-issue page on its own. **Then paste the text of that comment underneath the link** — the
-pasted text is what this field is graded on, so copy across what you actually posted.]
+https://github.com/codepath/pathreview-ai301-fa26-s1/issues/72#issuecomment-5863014662
 
 Hello, I'd like to work on this issue, #72, as my first contribution to this repo. verify_password currently raises UnknownHashError when a hash is in a bad format. I'll reproduce the issue and update with a reproduction report with my environment, reproduction steps, and the output behavior.
 Then I'll get to work on the fix, removing the xfail marker referencing H-05 once it's working.
 
 **Reproduction comment**
 
-[Link to the comment where you posted your reproduction. It must record the environment
-(OS, relevant versions, code state), steps a stranger could follow, and what you observed.
-**Then paste the text of that comment underneath the link** — the pasted text is what this
-field is graded on, so copy across what you actually posted.]
+https://github.com/codepath/pathreview-ai301-fa26-s1/issues/72#issuecomment-5863022991
+
+# Reproduction Report
+Successfully reproduce. verify_password raises passlib.exc.UnknownHashError instead of False when given a hash in a bad format.
+
+## Environment
+macOS 15.7.7 (x86), Python 3.14.7, repo at commit f89c06f
+passlib 1.7.4, bcrypt 4.3.0 
+
+Note about the environment, function was run isolated instead of re-building the entire project.
+Not all dependencies were used
+
+## Reproduction Steps
+
+1. Install and environment creation
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -e . --no-deps
+pip install \
+  "passlib[bcrypt]>=1.7.4" \
+  "bcrypt>=4.0.1,<5.0.0" \
+  "pydantic>=2.5.0" \
+  "pydantic-settings>=2.1.0" \
+  "python-jose[cryptography]>=3.3.0" \
+  pytest
+```
+
+2. Verify Correct Behavior
+
+```bash
+python3 good_test.py
+```
+```bash
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/marc/Desktop/CodePath/AI301_2026/Unit 2/pathreview-ai301-fa26-s1/.venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+hash: $2b$12$ ...
+correct password: True
+wrong password:   False
+```
+
+**'good_test.py'**
+```python
+from core.security import hash_password, verify_password
+hashed = hash_password("password")
+print("hash:", hashed[:7], "...")
+print("correct password:", verify_password("password", hashed))
+print("wrong password:  ", verify_password("nope", hashed))
+```
+
+3. Reproduced Issue
+
+```bash
+python3 bad_test.py
+```
+```bash
+passlib.exc.UnknownHashError
+hash could not be identified
+```
+**'bad_test.py'**
+```python
+from core.security import verify_password
+try:
+    result = verify_password("password", "not_a_valid_bcrypt_hash")
+    print("returned:", result)
+except Exception as e:
+    print(type(e).__module__ + "." + type(e).__name__)
+    print(e)
+```
+
+## Expected
+verify_password("password", "not_a_valid_bcrypt_hash") returns False and does not raise. 
+
+## Actual
+passlib.exc.UnknownHashError is raised
+
+Additionally Verified the XFAIL with H-05
+
+```bash
+pytest tests/unit/test_security.py::TestSecurity::test_verify_with_wrong_hash_format -v --tb=short -rx
+```
+```bash
+======================================================================================== test session starts ========================================================================================
+platform darwin -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- /Users/marc/Desktop/CodePath/AI301_2026/Unit 2/pathreview-ai301-fa26-s1/.venv/bin/python3.14
+cachedir: .pytest_cache
+rootdir: /Users/marc/Desktop/CodePath/AI301_2026/Unit 2/pathreview-ai301-fa26-s1
+configfile: pyproject.toml
+collected 1 item                                                                                                                                                                                    
+
+tests/unit/test_security.py::TestSecurity::test_verify_with_wrong_hash_format XFAIL (issue #72 (manifest H-05): password verify raises UnknownHashError instead of returning False)           [100%]
+
+========================================================================================= warnings summary ==========================================================================================
+core/config.py:7
+  /Users/marc/Desktop/CodePath/AI301_2026/Unit 2/pathreview-ai301-fa26-s1/core/config.py:7: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Settings(BaseSettings):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+====================================================================================== short test summary info ======================================================================================
+XFAIL tests/unit/test_security.py::TestSecurity::test_verify_with_wrong_hash_format - issue #72 (manifest H-05): password verify raises UnknownHashError instead of returning False
+=================================================================================== 1 xfailed, 1 warning in 0.29s ===================================================================================
+```
+
 
 ## Eval iterations
 
