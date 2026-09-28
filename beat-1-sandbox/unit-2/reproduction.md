@@ -15,8 +15,7 @@ label is not graded.
 
 **GitHub username**
 
-[Your GitHub username, exactly as it appears on your profile — no `@`, no profile URL. Your
-comments upstream are identified by this name.]
+MarcM987
 
 ---
 
@@ -27,6 +26,9 @@ comments upstream are identified by this name.]
 [Link to the comment where you claimed the issue. Use the comment's own permalink, not the
 issue page on its own. **Then paste the text of that comment underneath the link** — the
 pasted text is what this field is graded on, so copy across what you actually posted.]
+
+Hello, I'd like to work on this issue, #72, as my first contribution to this repo. verify_password currently raises UnknownHashError when a hash is in a bad format. I'll reproduce the issue and update with a reproduction report with my environment, reproduction steps, and the output behavior.
+Then I'll get to work on the fix, removing the xfail marker referencing H-05 once it's working.
 
 **Reproduction comment**
 
