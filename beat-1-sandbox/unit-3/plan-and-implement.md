@@ -34,9 +34,124 @@ fix/72-verify-password-unknown-hash
 
 **Evidence**
 
-[Your Unit 2 reproduction steps re-run against the built change: the before, then the
-after. Paste both, including the commands you ran and their output.]
+Files used both before and after the fix:
 
+**'good_test.py'**
+```python
+from core.security import hash_password, verify_password
+hashed = hash_password("password")
+print("hash:", hashed[:7], "...")
+print("correct password:", verify_password("password", hashed))
+print("wrong password:  ", verify_password("nope", hashed))
+```
+**'bad_test.py'**
+```python
+from core.security import verify_password
+try:
+    result = verify_password("password", "not_a_valid_bcrypt_hash")
+    print("returned:", result)
+except Exception as e:
+    print(type(e).__module__ + "." + type(e).__name__)
+    print(e)
+```
+
+- Before:
+
+Run validating good behavior.
+
+```bash
+python3 good_test.py
+```
+```bash
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/marc/Desktop/CodePath/AI301_2026/Unit 2/pathreview-ai301-fa26-s1/.venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+hash: $2b$12$ ...
+correct password: True
+wrong password:   False
+```
+
+Run validating bad behavior.
+
+```bash
+python3 bad_test.py
+```
+```bash
+passlib.exc.UnknownHashError
+hash could not be identified
+```
+
+Problem confirmed by test result with H-05 marker:
+```bash
+pytest tests/unit/test_security.py::TestSecurity::test_verify_with_wrong_hash_format -v --tb=short -rx
+```
+```bash
+======================================================================================== test session starts ========================================================================================
+platform darwin -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- /Users/marc/Desktop/CodePath/AI301_2026/Unit 2/pathreview-ai301-fa26-s1/.venv/bin/python3.14
+cachedir: .pytest_cache
+rootdir: /Users/marc/Desktop/CodePath/AI301_2026/Unit 2/pathreview-ai301-fa26-s1
+configfile: pyproject.toml
+collected 1 item                                                                                                                                                                                    
+
+tests/unit/test_security.py::TestSecurity::test_verify_with_wrong_hash_format XFAIL (issue #72 (manifest H-05): password verify raises UnknownHashError instead of returning False)           [100%]
+
+========================================================================================= warnings summary ==========================================================================================
+core/config.py:7
+  /Users/marc/Desktop/CodePath/AI301_2026/Unit 2/pathreview-ai301-fa26-s1/core/config.py:7: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Settings(BaseSettings):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+====================================================================================== short test summary info ======================================================================================
+XFAIL tests/unit/test_security.py::TestSecurity::test_verify_with_wrong_hash_format - issue #72 (manifest H-05): password verify raises UnknownHashError instead of returning False
+=================================================================================== 1 xfailed, 1 warning in 0.29s ===================================================================================
+```
+
+- After:
+
+Run validating good behavior is still correct
+
+```bash
+python3 good_test.py
+```
+```bash
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/Users/marc/Desktop/CodePath/AI301_2026/pathreview-ai301-fa26-s1/.venv/lib/python3.14/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+hash: $2b$12$ ...
+correct password: True
+wrong password:   False
+```
+
+Run validating bad behavior is fixed
+
+```bash
+python3 bad_test.py
+```
+```bash
+returned: False
+```
+
+Fix confirmed by test result with removed H-05 marker:
+```bash
+pytest tests/unit/test_security.py::TestSecurity::test_verify_with_wrong_hash_format -q
+```
+```bash
+::test_verify_with_wrong_hash_format -q
+.                                                                                                  [100%]
+============================================ warnings summary ============================================
+core/config.py:7
+  /Users/marc/Desktop/CodePath/AI301_2026/pathreview-ai301-fa26-s1/core/config.py:7: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class Settings(BaseSettings):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 1 warning in 0.23s
+```
 ## Eval iterations
 
 Answer all four sections. Quote source text directly; paraphrase does not satisfy these
