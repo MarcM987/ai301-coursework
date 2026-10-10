@@ -32,4 +32,7 @@ Expecting: no `UnknownHashError` on the malformed hash
 Other passlib errors may or may not need to also return `False`, this plan only catches `UnknownHashError` to keep within scope
 
 ## Deviations
-No deviations, plan executed as specified and resolved the incorrect behavior.
+Python version switched to Python 3.11.17
+Installed the project dependencies and ran the full unit suite with `make test-unit` instead of my test script.
+The code change is unchanged: catch only `UnknownHashError` in `verify_password`, and remove the H-05 xfail. 
+Other seeded xfails in the test suite are not this issue.
