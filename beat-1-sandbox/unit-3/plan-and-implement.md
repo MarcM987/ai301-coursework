@@ -6,7 +6,7 @@ Record of your plan, the branch you built it on, and the evaluation runs that pr
 `eval-run.txt`. This file is graded at the path above; a copy kept anywhere else in the
 repository is not read.
 
-Complete every labelled field below. Each is graded on its own; content placed under the wrong
+Complete every labeled field below. Each is graded on its own; content placed under the wrong
 label is not graded.
 
 ---
@@ -167,13 +167,13 @@ pkg-20, my rubric decided to reject this pkg which agrees with its gold label. H
 
 **Check rationale**
 
-| Communication-conventions | the plan and plan comment compared against the issue thread, thread highlights, repo facts, and contribution policy and AI policy | the plan and comment follow all required formatting and inclusions required as well as providing ai disclosures when required by policies | required |
+| Communication-conventions | the plan and plan comment compared against the issue thread, thread highlights, repo facts, and contribution policy and AI policy | the plan and comment follow all required formatting and inclusions required as well as providing AI disclosures when required by policies | required |
 
-This reads as it does because originally I simply required that all contributions and AI policies must be followed, but this was not direct enough and it kept missing the ai disclosure. While this was also an issue with my procedure, simply telling it to 'follow required policies' is not direct enough. It should be stated the aspect of those policies to precisely review each requirement. It needs to be clear for example, that AI disclosures must be present if required, while also ensuring that disclosures where not required don't create a failure.
+This reads as it does because originally I simply required that all contributions and AI policies must be followed, but this was not direct enough and it kept missing the AI disclosure. While this was also an issue with my procedure, simply telling it to 'follow required policies' is not direct enough. It should be stated the aspect of those policies to precisely review each requirement. It needs to be clear for example, that AI disclosures must be present if required, while also ensuring that disclosures where not required don't create a failure.
 
 **Trade-offs**
 
-The trade off with this check in its current form is that it also restricts the plan and were fail when the plan itself doesn't make ai disclosures, even though this is not strictly required. However, as a personal preference, it's important to be upfront about ai usage even for ourselves. If part of my plan involves using ai or I deviate from the plan because of ai, this should be clearly documented, so that approach reasoning, understanding, and output behavior confidence remain clear.
+The trade off with this check in its current form is that it also restricts the plan and were fail when the plan itself doesn't make AI disclosures, even though this is not strictly required. However, as a personal preference, it's important to be upfront about AI usage even for ourselves. If part of my plan involves using AI or I deviate from the plan because of AI, this should be clearly documented, so that approach reasoning, understanding, and output behavior confidence remain clear.
 
 ---
 

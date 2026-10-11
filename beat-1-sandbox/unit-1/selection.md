@@ -6,7 +6,7 @@ Record of the issue carried into Unit 2, and of the evaluation runs that produce
 `eval-run.txt`. This file is graded at the path above; a copy kept anywhere else in
 the repository is not read.
 
-Complete every labelled field below. Each is graded on its own; content placed under the
+Complete every labeled field below. Each is graded on its own; content placed under the
 wrong label is not graded.
 
 ---
@@ -98,7 +98,7 @@ Sometimes people attempt to claim issues in the comments of the issue instead of
 However, just because someone comments they want the does not mean the maintainer will assign it to them, so it also checks whether or not the
 maintainer agrees that the issue is theirs. The check is listed as 'preferred' though so that the rubric does not disqualify the issue if it has
 been abandoned or unassigned with the comments remaining; there is a separate check in my rubric that checks for proper assignment and unlinked PRs 
-separately as 'required' checks. This one is a courtesy check just incase, but does not disqualify for comments that happened potentially years ago 
+separately as 'required' checks. This one is a courtesy check just in-case, but does not disqualify for comments that happened potentially years ago 
 that may not still be relevant.
 
 **Trade-offs**
@@ -118,7 +118,7 @@ This is also the basis for the claim comment you write in Unit 2.
 **Selection rationale**
 
 1. The issue fits my interest because it involves a language I'm strongly familiar with, Python, and covers a topic and tool set I that not only have experience in, but also want to do more of.
-2. The verdict correct identified this issue as accepted and also correctly ranked it as number 1, which aligns with my preferences. However, something I weighted for the issue that the rubric could not was that using issues is a topic I specifically need to review more and this would be great practice for reenforcing that area; this only came to mind once I came across the specific issue, and if I did not preemptively consider that then neither would my rubric.
+2. The verdict correct identified this issue as accepted and also correctly ranked it as number 1, which aligns with my preferences. However, something I weighted for the issue that the rubric could not was that using issues is a topic I specifically need to review more and this would be great practice for reinforcing that area; this only came to mind once I came across the specific issue, and if I did not preemptively consider that then neither would my rubric.
 3. I anticipate this may have a fair amount of difficulty in claiming primarily because there are likely many people who also want to claim it. Its interesting, challenging, but not too challenging, involves the 'cool' world of security, and is marked as a 'good first issue', which means the competition for claiming the issue is likely higher than the others.
 
 Related paths: `eval-run.txt` in this directory; your skill's files in

@@ -14,7 +14,7 @@ Do not answer based on your opinion, specifically Execute 'procedure.md' which w
 
 Decide accept (ready to submit) or reject (hold) for one PR package.
 Do not grade additional packages in the same run.
-Do not answer any other question (including, but not limited to: code quality, issue quality, or merge accept likelyhood).
+Do not answer any other question (including, but not limited to: code quality, issue quality, or merge accept likelihood).
 
 ## Inputs and modes
 
@@ -49,7 +49,7 @@ In eval mode, ignore 'voice-guide.md' entirely.
 
 ## Component reads
 
-Read thesse files in the manner described in 'procedure.md' before grading:
+Read these files in the manner described in 'procedure.md' before grading:
 - 'rubric.md: the checks table of criteria to hold to the PR and the corresponding verdict rule that grades it. 
     If it has no filled check rows, or incomplete check rows, stop and say this skill cannot grade without a complete rubric.
 - 'procedure.md': the procedure laid out, what to do, the read order, evidence gathering, check execution, and verdict assembly. 
@@ -63,7 +63,7 @@ Read thesse files in the manner described in 'procedure.md' before grading:
 
 The verdict space is binary: 'accept' (ready to submit) or 'reject' (hold). 
 There is no third verdict, if it is not confidently accept, then it is reject. 
-Concernss go in evidence lines, and do not affect the verdict.
+Concerns go in evidence lines, and do not affect the verdict.
 
 Print a short per-check summary first (one line per check, plus any live-mode voice notes). 
 Then end with this fenced JSON block and nothing after it. 
@@ -87,7 +87,7 @@ It must be present, valid, and last.
 - Evidence first: No check is graded without the fact or quote that decided it. 
     Opinions or "Looks fine" are not evidence.
 - Grade the thing, not the polish: A short complete PR can be ready. 
-    A long confident one can hide drift, so review thuroughly. 
+    A long confident one can hide drift, so review thoroughly. 
     Read the diff, evidence, and description against the plan, issue, and provided or stated standards.
 - Honest shortfalls are not silent drift: 
     A planned change that the plan's deviation notes and the description both refer can still pass. 

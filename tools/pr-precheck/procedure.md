@@ -22,7 +22,7 @@
 2. Plan fidelity: quote the plan's in-scope and out-of-scope lines, any deviation note, the diff's changed files, and any description sentence that mentions the plan was followed, deviated from, or that a file was updated.
 3. Test evidence: quote the plan's test plan steps and the matching before/after lines in the test evidence section. 
     If the planned reproduction is absent, quote that absence.
-4. Diff quality: quote the chnages that implement the fix and any debug print, commented-out block, dead function, TODO, or unrelated hunk. 
+4. Diff quality: quote the changes that implement the fix and any debug print, commented-out block, dead function, TODO, or unrelated hunk. 
     If no changes, quote that fact.
 5. Standards: quote each template section in the repo facts (or live template) requires, and the matching or missing text in the PR or description. 
     If there is no template, quote that fact and quote AI-use policy only if one is explicitly required.
@@ -30,13 +30,13 @@
 ## Check execution
 
 1. Run the checks in rubric table in order they are listed.
-2. For each check, compare the gathered evidence and quotes for that check's evidence family to that checks's pass condition. 
+2. For each check, compare the gathered evidence and quotes for that check's evidence family to that check's pass condition. 
     Do not re-read the whole package between checks.
 3. Grade checks only as pass, fail, or unclear; Unclear means the evidence was absent or indeterminate.
 4. An incomplete check row fails. 
     If the incomplete check mentions it is required or preferred, that check's failure is treated accordingly.
-    If the incomplete check does not mention whether it is required or preferred, it is considered required and that check's failure is treated accordinly.
-5. In live mode, voice guide breaks are summary notes only and are not checks unless the rubric has a check that refers to the voice guide specifcally.
+    If the incomplete check does not mention whether it is required or preferred, it is considered required and that check's failure is treated accordingly.
+5. In live mode, voice guide breaks are summary notes only and are not checks unless the rubric has a check that refers to the voice guide specifically.
 
 ## Verdict assembly
 

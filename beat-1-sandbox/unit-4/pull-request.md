@@ -6,7 +6,7 @@ Record of the pull request you opened against the Path Review repo, and of the e
 runs that produced `eval-run.txt`. This file is graded at the path above; a copy kept
 anywhere else in the repository is not read.
 
-Complete every labelled field below. Each is graded on its own; content placed under the wrong
+Complete every labeled field below. Each is graded on its own; content placed under the wrong
 label is not graded.
 
 ---
@@ -42,7 +42,7 @@ The check reads this way and includes a seemingly redundant second sentence beca
 
 **Trade-offs**
 
-The tradeoff to this check is that it can pass scenarios where an approach is completely incorrect, as long as there is evidence of it and it is addressed. However, that scenario not only gets considered in other checks in this rubric, such as the plan-fidelity, but also in the chain of checks through previous rubrics; for that scenario to pass, it would have to be part of the plan, the plan that was moderated through the previous tool to faithfully address the issue and reproduction (the reproduction tool had similar integrity checks towards the issue as well). So this scenario should be very unlikely as long as it is not intentionally gamed.
+The trade-off to this check is that it can pass scenarios where an approach is completely incorrect, as long as there is evidence of it and it is addressed. However, that scenario not only gets considered in other checks in this rubric, such as the plan-fidelity, but also in the chain of checks through previous rubrics; for that scenario to pass, it would have to be part of the plan, the plan that was moderated through the previous tool to faithfully address the issue and reproduction (the reproduction tool had similar integrity checks towards the issue as well). So this scenario should be very unlikely as long as it is not intentionally gamed.
 
 ---
 

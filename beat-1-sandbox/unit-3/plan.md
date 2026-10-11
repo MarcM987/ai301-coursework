@@ -3,9 +3,9 @@
 `verify_password` in `core/security.py` calls `pwd_context.verify()` and lets passlib raise `passlib.exc.UnknownHashError` when the stored string is not recognized
 
 ## Repro Evidence Recap
-Reproduced on macOS 15.7.7 (x86), Python 3.14.7, passlib 1.7.4, bcyrpt 4.3.0, commit f89c06f.
+Reproduced on macOS 15.7.7 (x86), Python 3.14.7, passlib 1.7.4, bcrypt 4.3.0, commit f89c06f.
 - Good Behavior: `verify_password(correct, valid_hash)` return `True`; if wrong password return `False`.
-- Bad Bahavior: `verify_password("password", "not_a_valid_bcrypt_hash")` raises `UnknownHashError:...`
+- Bad Behavior: `verify_password("password", "not_a_valid_bcrypt_hash")` raises `UnknownHashError:...`
 - Related test: `tests/unit/test_security.py::TestSecurity::test_verify_with_wrong_hash_format` is `@pytest.mark.xfail(strict=True, reason="issue #72 (manifest H-05): password verify raises UnknownHashError instead of returning False")` and wants `result is False`.
 
 ## Scope

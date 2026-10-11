@@ -14,7 +14,7 @@ Where it lives:
 - Live: the issue's description, the repro evidence, and the plan's scope and changes sections
 
 What good looks like:
-The plan is relevent only to the issue and repro evidence, with no non-relevant functions adjusted without explanation as to why it is relevant to the issue.
+The plan is relevant only to the issue and repro evidence, with no non-relevant functions adjusted without explanation as to why it is relevant to the issue.
 
 ## Executability
 Where it lives:
@@ -42,9 +42,9 @@ Any uncertainties in the plan are clearly addressed and deviation from the repro
 
 ## Comms
 Where it lives:
-- Eval: the plan and plan comment along with the thread highlights, repo facts, contribution policies, and ai policies
-- Live: the plan and plan comment along with the issue thread, the repo contribution policies, and ai policies
+- Eval: the plan and plan comment along with the thread highlights, repo facts, contribution policies, and AI policies
+- Live: the plan and plan comment along with the issue thread, the repo contribution policies, and AI policies
 
 What good looks like:
-The comment and plan adhere to the contribution and ai policies and disclosures as well as any additional direction provided by the maintainer
+The comment and plan adhere to the contribution and AI policies and disclosures as well as any additional direction provided by the maintainer
 

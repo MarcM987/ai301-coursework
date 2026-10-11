@@ -4,7 +4,7 @@
 
 1. If live mode, read scope.md first. Stop if the issue is not in the scoped repo or if the repo line is still a placeholder
 2. Read the issue body and thread (or thread highlights if in eval mode). Note the requested behavior and any maintainer directions
-3. Read the repro repro evidence. Note the actual and expected behaviors.
+3. Read the repro evidence. Note the actual and expected behaviors.
 4. Read the candidate plan. Note the plan's described cause, scope, steps, tests, and any risks.
 5. Read the candidate plan comment.
 6. Read rubric.md, references/evidence-guide.md, and this procedure before grading. Do not grade on memory of previous runs.
@@ -33,4 +33,4 @@
 2. If any check is unclear it is counted as a failure
 3. A failed or unclear check, whether preferred or required, gets reported
 4. Provide a one-line summary for each check
-5. Provide a json block with the item graded, the checks and their results, and the verdict. Print nothing else after this.
+5. Provide a JSON block with the item graded, the checks and their results, and the verdict. Print nothing else after this.
