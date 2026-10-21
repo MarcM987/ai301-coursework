@@ -55,10 +55,15 @@ happened; these entries are the toolkit's own timeline.
 All four entries are graded. Keep every heading below, and fill each
 one in the week it belongs to.
 
-**Unit 5: [one line on the tool work]**
+**Unit 5: Built the issue-scout overlay and a profile-driven search strategy for first contributions in the wild**
 
 [2-4 sentences: what you built (the scout, your strategy), what broke
 or fell short, what changed because of it.]
+I built the scout using search requests that gather all things compatible with my profile, at least one search per profile sentence; this was a search for literal compatibility.
+Then I decided the ranking of those results by the content of the profile, setting preferences for my strengths and desired work using words likely found in each subject to match: strongest in C/Python, growth goals in C++/assembly, signals/security, computer vision, and data science. 
+I also made sure to drop any results with assignees or those that seemed stale; and ordered by fewer comments first, but with at least one comment.
+What broke was the unaticipated inclusion of repo forks, throw away repos, and issues requiring hardware, so what changed was a revision of the rubric and evidence guide to account for each directly.
+
 
 **Unit 6: [one line on the tool work]**
 
