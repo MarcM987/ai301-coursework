@@ -68,7 +68,9 @@ What broke was the unaticipated inclusion of repo forks, throw away repos, and i
 fell short, and what changed because of it. "Nothing broke" counts when
 it is true - say how you know.]
 
-
+Promoted the voice guard as instructed then created the repo-memory file with guidance on the contribution policy, test requirements, scope, and relevant subsystem.
+I gave the memory file my current insights regarding the specifc location of behavior as well based on my reproduction and other issue comments.
+I also made sure to add a note to keep the work honest and properly styled.
 
 
 **Unit 7: [one line on the tool work]**
