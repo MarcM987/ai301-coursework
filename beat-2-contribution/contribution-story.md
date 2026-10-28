@@ -56,19 +56,20 @@ one in the week it belongs to.
 
 **Unit 5: Built the issue-scout overlay and a profile-driven search strategy for first contributions in the wild**
 
-[2-4 sentences: what you built (the scout, your strategy), what broke
-or fell short, what changed because of it.]
 I built the scout using search requests that gather all things compatible with my profile, at least one search per profile sentence; this was a search for literal compatibility.
 Then I decided the ranking of those results by the content of the profile, setting preferences for my strengths and desired work using words likely found in each subject to match: strongest in C/Python, growth goals in C++/assembly, signals/security, computer vision, and data science. 
 I also made sure to drop any results with assignees or those that seemed stale; and ordered by fewer comments first, but with at least one comment.
 What broke was the unaticipated inclusion of repo forks, throw away repos, and issues requiring hardware, so what changed was a revision of the rubric and evidence guide to account for each directly.
 
 
-**Unit 6: [one line on the tool work]**
+**Unit 6: Installed the voice-guard overlay, patched the rubric, and wrote a local repo-memory file for meshtastic/firmware**
 
 [2-4 sentences: the voice-guard, the repo-memory file. What broke or
 fell short, and what changed because of it. "Nothing broke" counts when
 it is true - say how you know.]
+
+
+
 
 **Unit 7: [one line on the tool work]**
 
@@ -84,24 +85,26 @@ drafted, what you did with the draft.]
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs in your own words: how you searched, what your scan
-surfaced, what your scout's verdict said, why this issue fits your
-profile, and what you hope to learn. If your scout's verdict on it
-was reject and you chose it anyway, say so here and say why; choosing
-against your own tool silently is what loses points. Close with an
-honest read of the tool itself: where the scout fell short on a real
-wild search and what you changed or would change, or what convinced
-you it held up. **Record the link to your claim comment in this section too.**
-Not claimed yet? Write `claim pending` and today's date where the link goes,
-and add the link the moment your claim lands.]
+I searched for this issue using the AI301 Issue Selection tool as required. 
+However, I filtered for languages I was familiar with, issues specific to bugs, and organizations that I know and support.
+My scan surfaced that I should double check that this is still an issue as the devlopment branch is on a newer version, which I subseqently did confirm on the latest release.
+My scout produced an accept verdict on the issue. 
+This issue also fits my profile because it plays on my strengths: C/C++ and Python, while also aligning with my profile's interest in security.
+That is essentially what I hope to gain from working on this issue, using what I know while simultaneously pushing my comfort zone to grow, in this case towards security which is an area I'm hoping to grow in.
+
+The scout did fairly well in all areas, until I created an interesting edge case for it.
+A previous issue I was exploring proved to be already resolved during my reproduction and the maintainer agreed, so the tool had to contend with passing or failing an issue that I commented on, resolved, and was confirmed by the maintainer and discussed to be closed. 
+My rubric was never meant to deal with the confusion of "no assignees" (informal or formal), but also informally resolved by the me, the user; It was also never meant to grade closed issues; it passed, with no evidence on assignees, arguably it should have failed on both metrics.
+Both of these are edge cases that I would consider in my rubric, adding a check both to ensure the issue is open and also not informally resolved, even without a specific "claim".
+
+Claimed: https://github.com/meshtastic/firmware/issues/8213#issuecomment-6423112343
 
 **Toolkit**
 
-- Tool: issue-scout (your scout: your search strategy, your rubric),
-  and how you used it
-- What it produced: [the scan and its verdict on this issue, described]
-- Difficulties: [where it fell short, or "none met" if none did]
-- What changed: [what you patched or would update, or "nothing"]
+- Tool: issue-scout (Patched for the wild according to unit 6, search-strategy.md to check for issues specific to my profile + rubric.md to check validity of the repo and the issue), I used it to both find issues that may be relevent to my skillset and interests and also to then grade issues that I select from curation.
+- What it produced: It produced a verdict of accept for this issue and noted that it fits my desired growth areas to help me improve in both C++ and Security regarding its references to SSL certs. It gave it the difficulty of "Straightforward".
+- Difficulties: It didn't handle the edges cases of already resolved issues very well for the other issues.
+- What changed: The difficulty adjustment in scope via the patch. And I would update both the rubric and the evidence guide to consider scernios more common to resolved issues and not just the behaviors around open issues.
 
 ---
 
