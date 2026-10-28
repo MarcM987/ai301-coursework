@@ -141,31 +141,293 @@ Claimed: https://github.com/meshtastic/firmware/issues/8213#issuecomment-6423112
 
 **Environment Setup**
 
-[What a stranger would need to stand this up: your operating system,
-the relevant versions (language, runtime, package manager, the project
-itself), and how you set the project up. Then the challenges you faced
-and how you solved them, or that none came up.]
+No challenges other than dependancies. The build will stop and explain a missing tool if the scenario is encountered. 
+This dependacy list worked for my machine.
+
+Ubuntu 26.04.1 LTS
+Meshtastic: 2.8.2.eaba8b9, commit: eaba8b95b, newer build used as the issue has not been addressed or resolved, and is still present.
+PlatformIO Core: 6.2.0
+
+```bash
+sudo apt update && sudo apt install -y \
+  build-essential g++ pkg-config git python3-pip python3-venv \
+  libgpiod-dev libyaml-cpp-dev libjsoncpp-dev libbluetooth-dev \
+  libusb-1.0-0-dev libi2c-dev libuv1-dev libxkbcommon-dev \
+  libinput-dev libsqlite3-dev libbsd-dev \
+  openssl libssl-dev libulfius-dev liborcania-dev \
+  libsdl2-dev libcurl4-gnutls-dev
+
+python3 -m venv venv
+source .venv/bin/activate
+pip install -U platformio
+```
+
+```bash
+gh repo clone MarcM987/firmware
+cd firmware
+git checkout develop
+git submodule update --init --recursive
+pio run -e native
+sudo mkdir -p /etc/meshtasticd/ssl
+sudo cp ./bin/config-dist.yaml /etc/meshtasticd/config.yaml
+```
+
+** /etc/meshtasticd/config.yaml ** , everything else is default, module Sim is to enable SimRadio
+```yaml
+...
+Lora:
+    Module: Sim
+...
+Webserver:
+    Port: 9443
+    RootPath: /usr/share/meshtasticd/web
+    SSLKey: /etc/meshtasticd/ssl/private_key.pem
+    SSLCert: /etc/meshtasticd/ssl/certificate.pem
+...
+```
 
 **Steps to Reproduce**
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. Install and Setup the Environment As Above
+2. Verify Correct Behavior
+
+Deleting certificates between runs, to ensure clean start to each test.
+```bash
+sudo rm /etc/meshtasticd/ssl/*.pem
+```
+
+```bash
+sudo ./.pio/build/native/meshtasticd 
+```
+```bash
+Portduino is starting, VFS root at /root/.portduino/default
+Using /etc/meshtasticd/config.yaml as config file
+MAC ADDRESS: 9C:B6:D0:0B:66:E2
+ERROR | ??:??:?? 0.001 No radio instance available to provide entropy
+Initializing extra pins
+Portduino critical error: Failed to open posix file /dev/spidev0.0, errno=2
+No hardware spi chip found...
+WARN  | 11:20:16 0.074 RTC set: not found (addr 0x00)
+WARN  | 11:20:16 0.074 RTC read: not found (addr 0x00)
+INFO  | 11:20:16 0.074 
+
+//\ E S H T /\ S T / C
+
+INFO  | 11:20:16 0.074 No I2C device configured, Skip
+INFO  | 11:20:16 0.074 No I2C devices found
+INFO  | 11:20:16 0.074 S:B:37,2.8.2.eaba8b9,native,MarcM987/firmware
+INFO  | 11:20:16 0.074 Build timestamp: 1793170800
+INFO  | 11:20:16 0.074 Init NodeDB
+INFO  | 11:20:16 0.074 Load /prefs/nodes.proto
+INFO  | 11:20:16 0.074 Loaded /prefs/nodes.proto
+INFO  | 11:20:16 0.074 Loaded saved nodedatabase v25: 1 nodes, 0 pos, 0 tel, 0 env, 0 status
+/root/.portduino/default/prefs/warm.dat does not exist
+INFO  | 11:20:16 0.074 Load /prefs/device.proto
+INFO  | 11:20:16 0.075 Loaded /prefs/device.proto
+INFO  | 11:20:16 0.075 Loaded saved devicestate v25
+INFO  | 11:20:16 0.075 Load /prefs/config.proto
+INFO  | 11:20:16 0.075 Loaded /prefs/config.proto
+INFO  | 11:20:16 0.075 Loaded saved config v25
+ERROR | 11:20:16 0.075 Invalid channel index 0 > 0, malformed packet received?
+INFO  | 11:20:16 0.075 Load /prefs/module.proto
+INFO  | 11:20:16 0.075 Loaded /prefs/module.proto
+INFO  | 11:20:16 0.075 Loaded saved moduleConfig v26
+INFO  | 11:20:16 0.075 Load /prefs/channels.proto
+INFO  | 11:20:16 0.075 Loaded /prefs/channels.proto
+INFO  | 11:20:16 0.075 Loaded saved channelFile v26
+/root/.portduino/default/prefs/uiconfig.proto does not exist
+ERROR | 11:20:16 0.075 Can't open/read /prefs/uiconfig.proto
+INFO  | 11:20:16 0.076 Wanted region 0, using UNSET
+INFO  | 11:20:16 0.076 Sort took 0 ms
+INFO  | 11:20:16 0.076 Save /prefs/nodes.proto
+INFO  | 11:20:16 0.076 TransmitHistory: loaded 1 entries from disk
+WARN  | 18:20:16 0.076 RTC read: not found (addr 0x00)
+INFO  | 18:20:16 0.076 [TM] Config: nodeinfo_max_hops=0 rate_window=0s rate_max=0 unknown_thresh=0 pos_interval=21600s
+INFO  | 18:20:16 0.076 [TM] Allocating unified cache: 2048 entries (20480 bytes)
+/root/.portduino/default/prefs/hopScalingState.bin does not exist
+/root/.portduino/default/prefs/cannedConf.proto does not exist
+ERROR | 18:20:16 0.076 Can't open/read /prefs/cannedConf.proto
+INFO  | 18:20:16 0.076 CannedMessageModule is enabled
+WARN  | 18:20:16 0.076 DMShell enabled on Portduino: remote shell access is dangerous and intended for trusted debugging only
+INFO  | 18:20:16 0.076 DMShell: bounding unacknowledged output to 4 frames
+INFO  | 18:20:16 0.076 External Notification Module Disabled
+INFO  | 18:20:16 0.076 Start meshradio init
+INFO  | 18:20:16 0.076 Radio freq=906.875, config.lora.frequency_offset=0.000
+INFO  | 18:20:16 0.076 Set radio: region=UNSET, name=LongFast, config=0, ch=19, power=30
+INFO  | 18:20:16 0.076 newRegion->freqStart -> newRegion->freqEnd: 902.000000 -> 928.000000 (26.000000 MHz)
+INFO  | 18:20:16 0.076 numFreqSlots: 104 x 250.000kHz
+INFO  | 18:20:16 0.076 channel_num: 20
+INFO  | 18:20:16 0.076 frequency: 906.875000
+INFO  | 18:20:16 0.076 Slot time: 44 msec, preamble time: 131 msec
+INFO  | 18:20:16 0.076 sim init success
+ERROR | 18:20:16 0.076 Error reading File : /etc/meshtasticd/ssl/certificate.pem 
+ERROR | 18:20:16 0.076 SSL Certificate File can't be loaded or missing
+INFO  | 18:20:16 0.117 Create SSL Key /etc/meshtasticd/ssl/private_key.pem successful
+INFO  | 18:20:16 0.117 Create SSL Cert /etc/meshtasticd/ssl/certificate.pem successful
+INFO  | 18:20:16 0.117 Use webserver port from yaml config 9443 
+INFO  | 18:20:16 0.117 Webserver started
+INFO  | 18:20:16 0.119 Web Server framework started on port: 9443 
+INFO  | 18:20:16 0.119 Web Server root /usr/share/meshtasticd/web
+INFO  | 18:20:16 0.119 API server listen on TCP port 4403
+INFO  | 18:20:16 0.119 PowerFSM init, USB power=1
+INFO  | 18:20:16 0.119 MemAudit[boot]: msgstore=4400 warm=80000 nodedb=20000 satmaps=0 pkthist=10048 tmm=20480 total=134928
+INFO  | 18:20:16 0.119 [Power] Power: battery hardware absent (USB-only)
+INFO  | 18:20:46 30.076 [HOPSCALE] hop=7 util=0% nodes=0 samp=1/1 filt=1/1
+INFO  | 18:20:46 30.076 [NodeInfo] Send our nodeinfo to mesh (wantReplies=0)
+INFO  | 18:20:46 30.076 [NodeInfo] Send owner !3af077d8/Meshtastic 66e2/66e2
+INFO  | 18:20:46 30.208 [SimRadio] tophone queue status queue full, discard oldest
+INFO  | 18:21:16 60.076 [TM] Preloaded 0 next-hop hints from NodeDB
+```
+
+```bash
+ls /etc/meshtasticd/ssl/
+```
+```bash
+certificate.pem  private_key.pem
+```
+
+```bash
+sudo ss -tulpn | grep -E '4403|9443'
+```
+```bash
+tcp   LISTEN 0      5                                 0.0.0.0:4403       0.0.0.0:*    users:(("meshtasticd",pid=43426,fd=12))    
+tcp   LISTEN 0      4096                              0.0.0.0:9443       0.0.0.0:*    users:(("meshtasticd",pid=43426,fd=11))
+```
+
+3. Reproduced Issue
+
+```bash
+sudo rm /etc/meshtasticd/ssl/*.pem
+```
+
+```bash
+sudo ./.pio/build/native/meshtasticd --sim
+```
+```bash
+Portduino is starting, VFS root at /root/.portduino/default
+Running in simulated mode.
+ERROR | ??:??:?? 0.001 No radio instance available to provide entropy
+DEBUG | ??:??:?? 0.077 Upgrade time to quality NTP
+WARN  | 10:12:50 0.077 RTC set: not found (addr 0x00)
+WARN  | 10:12:50 0.077 RTC read: not found (addr 0x00)
+DEBUG | 10:12:50 0.077 RTC net quality reached (None -> NTP), reconciling rx_time
+INFO  | 10:12:50 0.077 
+
+//\ E S H T /\ S T / C
+
+INFO  | 10:12:50 0.077 No I2C device configured, Skip
+INFO  | 10:12:50 0.077 No I2C devices found
+DEBUG | 10:12:50 0.077 acc_info = 0
+DEBUG | 10:12:50 0.077 mag_info = 0
+INFO  | 10:12:50 0.077 S:B:37,2.8.2.eaba8b9,native,MarcM987/firmware
+INFO  | 10:12:50 0.077 Build timestamp: 1793170800
+INFO  | 10:12:50 0.077 Init NodeDB
+INFO  | 10:12:50 0.077 Load /prefs/nodes.proto
+INFO  | 10:12:50 0.077 Loaded /prefs/nodes.proto
+INFO  | 10:12:50 0.077 Loaded saved nodedatabase v25: 1 nodes, 0 pos, 0 tel, 0 env, 0 status
+/root/.portduino/default/prefs/warm.dat does not exist
+INFO  | 10:12:50 0.077 Load /prefs/device.proto
+INFO  | 10:12:50 0.077 Loaded /prefs/device.proto
+INFO  | 10:12:50 0.077 Loaded saved devicestate v25
+INFO  | 10:12:50 0.077 Load /prefs/config.proto
+INFO  | 10:12:50 0.078 Loaded /prefs/config.proto
+INFO  | 10:12:50 0.078 Loaded saved config v25
+ERROR | 10:12:50 0.078 Invalid channel index 0 > 0, malformed packet received?
+INFO  | 10:12:50 0.078 Load /prefs/module.proto
+INFO  | 10:12:50 0.078 Loaded /prefs/module.proto
+INFO  | 10:12:50 0.078 Loaded saved moduleConfig v26
+INFO  | 10:12:50 0.078 Load /prefs/channels.proto
+INFO  | 10:12:50 0.078 Loaded /prefs/channels.proto
+INFO  | 10:12:50 0.078 Loaded saved channelFile v26
+/root/.portduino/default/prefs/uiconfig.proto does not exist
+ERROR | 10:12:50 0.078 Can't open/read /prefs/uiconfig.proto
+DEBUG | 10:12:50 0.078 cleanupMeshDB purged 0 entries
+DEBUG | 10:12:50 0.078 Use nodenum 0x3af077d8 
+DEBUG | 10:12:50 0.078 Regenerate PKI public key from private key
+DEBUG | 10:12:50 0.079 Set DH private key for crypto operations
+DEBUG | 10:12:50 0.079 Expand short PSK #1
+INFO  | 10:12:50 0.079 Wanted region 0, using UNSET
+DEBUG | 10:12:50 0.079 Coerce telemetry to role-aware min on defaults
+INFO  | 10:12:50 0.079 Sort took 0 ms
+DEBUG | 10:12:50 0.079 Save to disk 16
+DEBUG | 10:12:50 0.079 Opening /prefs/nodes.proto, fullAtomic=0
+INFO  | 10:12:50 0.079 Save /prefs/nodes.proto
+INFO  | 10:12:50 0.079 TransmitHistory: loaded 1 entries from disk
+Portduino critical error: Failed to open posix file /dev/spidev0.0, errno=2
+No hardware spi chip found...
+DEBUG | 10:12:50 0.079 Use compiled/slipstreamed tzplaceholder                                         
+DEBUG | 17:12:50 0.079 Set Timezone to GMT0
+WARN  | 17:12:50 0.079 RTC read: not found (addr 0x00)
+DEBUG | 17:12:50 0.079 Start multicast thread
+INFO  | 17:12:50 0.080 [TM] Config: nodeinfo_max_hops=0 rate_window=0s rate_max=0 unknown_thresh=0 pos_interval=21600s
+INFO  | 17:12:50 0.080 [TM] Allocating unified cache: 2048 entries (20480 bytes)
+DEBUG | 17:12:50 0.080 [TM] NodeInfo cache not available on this target
+/root/.portduino/default/prefs/hopScalingState.bin does not exist
+/root/.portduino/default/prefs/cannedConf.proto does not exist
+ERROR | 17:12:50 0.080 Can't open/read /prefs/cannedConf.proto
+INFO  | 17:12:50 0.080 CannedMessageModule is enabled
+WARN  | 17:12:50 0.080 DMShell enabled on Portduino: remote shell access is dangerous and intended for trusted debugging only
+INFO  | 17:12:50 0.080 DMShell: bounding unacknowledged output to 4 frames
+INFO  | 17:12:50 0.080 External Notification Module Disabled
+DEBUG | 17:12:50 0.080 Activate sim radio on SPI port 
+INFO  | 17:12:50 0.080 Start meshradio init
+INFO  | 17:12:50 0.080 Radio freq=906.875, config.lora.frequency_offset=0.000
+INFO  | 17:12:50 0.080 Set radio: region=UNSET, name=LongFast, config=0, ch=19, power=30
+INFO  | 17:12:50 0.080 newRegion->freqStart -> newRegion->freqEnd: 902.000000 -> 928.000000 (26.000000 MHz)
+INFO  | 17:12:50 0.080 numFreqSlots: 104 x 250.000kHz
+INFO  | 17:12:50 0.080 channel_num: 20
+INFO  | 17:12:50 0.080 frequency: 906.875000
+INFO  | 17:12:50 0.080 Slot time: 44 msec, preamble time: 131 msec
+INFO  | 17:12:50 0.080 sim init success
+INFO  | 17:12:50 0.080 API server listen on TCP port 4403
+DEBUG | 17:12:50 0.080 LoRA bitrate = 118.394310 bytes / sec
+INFO  | 17:12:50 0.080 PowerFSM init, USB power=1
+INFO  | 17:12:50 0.080 MemAudit[boot]: msgstore=4400 warm=80000 nodedb=20000 satmaps=0 pkthist=10048 tmm=20480 total=134928
+DEBUG | 17:12:50 0.080 Node status update: 0 online, 1 total
+INFO  | 17:12:50 0.080 [Power] Power: battery hardware absent (USB-only)
+INFO  | 17:13:20 30.131 [HOPSCALE] hop=7 util=0% nodes=0 samp=1/1 filt=1/1
+INFO  | 17:13:20 30.131 [NodeInfo] Send our nodeinfo to mesh (wantReplies=0)
+DEBUG | 17:13:20 30.131 [NodeInfo] Skip send NodeInfo since we sent it <1800s ago
+INFO  | 17:13:50 60.089 [TM] Preloaded 0 next-hop hints from NodeDB
+INFO  | 17:14:20 90.150 [DeviceTelemetry] Send: air_util_tx=0.000000, channel_utilization=0.000000, battery_level=101, voltage=0.000000, uptime=90
+DEBUG | 17:14:20 90.150 [DeviceTelemetry] Initial packet id 692397083
+DEBUG | 17:14:20 90.150 [DeviceTelemetry] Node status update: 0 online, 1 total
+INFO  | 17:14:20 90.150 [DeviceTelemetry] Send packet to phone
+INFO  | 17:14:20 90.150 [DeviceTelemetry] Sending local stats: uptime=90, channel_utilization=0.000000, air_util_tx=0.000000, num_online_nodes=0, num_total_nodes=1, noise_floor=-120
+INFO  | 17:14:20 90.150 [DeviceTelemetry] num_packets_tx=0, num_packets_rx=0, num_packets_rx_bad=0
+```
+
+```bash
+ls /etc/meshtasticd/ssl/
+```
+```bash
+(no output)
+```
+```bash
+sudo ss -tulpn | grep -E '4403|9443'
+```
+```bash
+tcp   LISTEN 0      5                                 0.0.0.0:4403       0.0.0.0:*    users:(("meshtasticd",pid=34531,fd=10))
+```
+4. Observed Results
+## Expected
+Missing SSL certificates to be created and webserver started and listening on port 9443, as well as the API server on port 4403
+## Actual
+Missing SSL certificates never created and webserver never started; API Server starts without issue on port 4403.
 
 **Reproduction Evidence**
 
-- **Commit showing reproduction:** [link to commit in your fork]
-- **Screenshots/logs:** [if applicable]
-- **My findings:** [what you discovered during reproduction; an
-  honest, evidenced cannot-reproduce that led you to re-pick or ask
-  the maintainer belongs here and costs you nothing]
+- **Commit showing reproduction:** None
+- **Screenshots/logs:** Logs in the above reproduction guide
+- **My findings:**  The config.yaml file is never loaded in sim mode, and thus the ssl and web server confirgurations are never applied.
+    A work around for this is to specifically load it instead of relying on default loading, but whether this is intended or not needs clarification from the maintainer.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: repro-check (Checked my reproduction report and made sure there were no gaps)
+- What it produced: It accepted my report with minor suggestions regarding improved language
+- Difficulties: It unexpectedly nitpicked the fact I was working from my fork of the firmware and not the main repo.
+- What changed: I claified in my report that they are currently at the same commit, so working from mine is now understood to not be an issue.
 
 ---
 
