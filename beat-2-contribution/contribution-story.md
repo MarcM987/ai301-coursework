@@ -114,26 +114,28 @@ Claimed: https://github.com/meshtastic/firmware/issues/8213#issuecomment-6423112
 
 **Problem Description**
 
-[In your own words, what is broken or missing?]
+When running meshtasticd with the --sim flag, so that it runs in simulation mode, SSL certificates fail to be read or created.
+Similarily, the synergistic issue also noted with this is that the Webserver never starts.
 
 **Expected Behavior**
 
-[What should happen?]
+Upon starting meshtasticd in sim mode, SSL certificates should be successfully created and/or read, then the Webserver should start accordingly.
 
 **Current Behavior**
 
-[What actually happens?]
+Starting meshtasticd in sim mode never creates or reads SSL certificates and never starts the Webserver.
 
 **Affected Components**
 
-[Which parts of the codebase are involved?]
+The affected area of the codebase is contained within `src/platform/portduino/PortduinoGlue.cpp`.
+Specifically the sections regarding the setting of configuration settings around the sim setting parameters.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: Manual Review of the issue's stated relevant code section.
+- What it produced: An understanding of the SSL certificate and Webserver configuration behaviors
+- Difficulties: Deciphering the difference between intentional and unintentional behaviors.
+- What changed: I have a better understanding of where to begin implementations.
 
 ---
 
@@ -435,86 +437,90 @@ Missing SSL certificates never created and webserver never started; API Server s
 
 **Analysis**
 
-[Your analysis of the root cause: what is causing the issue, traced
-to the files and functions involved.]
+The issue is being caused because the configuration for the Webserver is never set, which in turn means the SSL certiifcates are not processed.
+This root cause is in `portduinoSetup` in `src/platform/portduino/PortduinoGlue.cpp`.
+The config loading if-else chain intentionally skips reading any config.yaml files when in sim mode, but when this change was made SSL and Webserver functionality were not considered.
 
 **Proposed Solution**
 
-[High-level description of your fix approach, and what you are
-deliberately NOT changing.]
+I am deliberately not changing the intended functionality of the if-else chain, as the maintainers explicitly seem to want that functionality.
+My proposed fix is to instead add the minimum critical configuration for the Webserver to function in a seperate code block that sets sim defaults.
 
 **Implementation Plan**
 
-1. [Modify file X to do Y]
-2. [Add or change Z]
-3. [Update tests]
+1. Modify `src/platform/portduino/PortduinoGlue.cpp` to also set the defaults for Webserver in sim mode
+2. Add the default Webserver port 9443 and root path to sim defaults configuration block at `if (portduino_config.force_simradio){`, defaults apply only when webserverport == -1.
+3. Rebuild and re-run the reproduction steps and capture the evidence.
+4. Manually check that the SSL cerrtifcates are created and read & that the Webserver starts properly as configured, as there is no test suite for these functionalities.
+5. Run the complete test suite for the build to ensure no other functionalities are negatively impacted by the change. 
 
-[Record deviations here as they happen: what changed mid-build and
-why. A recorded deviation is honest work; silent drift is not.]
+Risk:
+Potential for port collision when running many instances of sim.
+
+
+Issue was discovered to be resolved by a change in design implementations on an unmentioned and unreferenced PR #11348; found through manual investigation of a seemingly relevant code comment that turned out to be extremely relevant. 
+Resolving this issue in anyway, including in my successfully tested implementation to minimally configure Webserver by default, is a design decision.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: plan-check
+- What it produced: Fail on honesty.
+- Difficulties: The tool checks did not take into account visual/manual review and affects honesty.
+- What changed: Need to update rubric to allow for edge cases that have no formal test cases implemented.
 
 ---
 
 ## Testing Strategy
 
-[What observable checks prove the fix: your reproduction steps re-run
-against the built change (before and after), and the repo's own test
-suite or checks with the outcome shown. "Tests pass" with nothing
-observable named is not a strategy.]
+The reproductions steps were re-run both pre and post build change.
+The SSL certification read/creation, as well as the Webserver functionality were verified through the log outputs and manual verification of certificates and Webserver access via browser.
+The repo's built in test suite was also run pre and post build change to verify that no other functionalities or behaviors were negatively impacted.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: bin/run-tests.sh
+- What it produced: All tests pass
+- Difficulties: These tests don't strictly pertain to my issue's behavior and more so check the integrity of other functional systems.
+- What changed: Nothing changed, confirmed manual visual review is needed for resolving this issue.
 
 ---
 
 ## Implementation Notes
 
-[A running log, added to as you work. Date each entry. What you
-built, decisions you made when you made them, wrong turns included.]
+**10/29/2026**
+Issue stems from missing configurations in for the webserver that cause it not to load and thus not read/create SSL certificates. 
+Adding minimum configurations for port and root path
 
-**[Date]**
+**10/29-30/2026** (worked over-night)
+Minimum configurations set load behaviors to start webserver and resolves the issue.
+Behavior manually reviewed and full build compiled and test suite ran compared against test suite on clean build; Success, Ready for PR.
+Default configurations changed? Webserver now starts on default just as standard non-simulated run, is this intended? Investigating.
 
-[Entry]
-
-**[Date]**
-
-[Entry]
+**10/30/2026**
+Investigated relevant configuration code sections, discovered non-issue related PR discussing non loading of configuration in sim mode as intentional design; PR #11348.
+Issue is a design decision in current build, not a bug. Waiting for response from maintainer for implementing the resolving change or closing of the issue without a PR.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: Research and Communicate (Research discussions of behavioral changes discussed between maintainers and reached  out for clarification)
+- What it produced: A clear understanding of bug vs feature dynamics, awaiting response.
+- Difficulties: Unlinked and undocumented behavioral changes can sneak into other issues quietly, this was one such issue.
+- What changed: Resolving this issue should no longer be done without clear determinations from the maintainers.
 
 ---
 
 ## Pull Request
 
-**PR Link:** [GitHub PR URL when opened]
+**PR Link:** https://github.com/meshtastic/firmware/issues/8213
 
-**PR Description:** [what the PR says; much of the content above
-adapts into it]
+**PR Description:** No PR, the issue was resolved by a recent design decision. 
+So the best PR is simply closing the issue or waiting for a maintainer to direct regarding another design change.
 
 **Maintainer Feedback:**
 
-- [Date]: [feedback received, or "none yet"; silence is a normal
-  state and costs you nothing]
-- [Date]: [how you addressed it]
+- [10/29/2026]: No Response from the mainainer yet. 
 
-**Status:** [Awaiting review / Iterating / Merged / Closed. The
-status is a fact you record, never a grade: the PR is graded as
-opened.]
+**Status:** Awaiting review.
 
 **Toolkit**
 
