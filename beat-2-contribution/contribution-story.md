@@ -535,7 +535,10 @@ So the best PR is simply closing the issue or waiting for a maintainer to direct
 
 **Technical Skills Gained**
 
-[What you learned technically, named concretely.]
+I learned that there is a fine line between a bug and feature.
+Code can be correct absolutely, but if the results of that code are not to the intention of the hollistic design or even minor decsisons by those in charge then the code is still fundamentally incorrect.
+Integrity here means not continuing without maintainer direction once you've discovered your correct code is potentially unintended.
+The skill gained, the knowledge that researching the codebase and documents is not always enough, sometimes the social aspects of understanding communications that may implicitly determine behaviors is just as important.
 
 **Challenges Overcome**
 
@@ -544,7 +547,14 @@ Toolkit blocks above are full of them.]
 
 **What I'd Do Differently Next Time**
 
-[Reflection on your process.]
+Contrary to the workflow we've undergone, I would actually do a precursory investigation and plan before fully committing to shortcircuit this problem in the future.
+Our Current Workflow: Selection-Reproduction-Plan-Implement-Pull Request
+My New Workflow: Selection-Reproduction-Issue Investigation-PrePlan-Plan-Implement-Pull Request
+Where: 
+Issue Investigation is to breifly review the issue and the relevant codebase or documentation to answer the question- is this still a bug or has the recent build made it more so a design consideration? Done after reproduction as fully understanding the relevent behavior is critical in determining this.
+PrePlan is to do a cursory plan check, before wrtiing a report and doing numerous checks, simply go over the logic in your head and over the codebase and documentation to answer the question- would resolving this require a change in behaviors other than the specific bug/issue? would it require a change in documentation such that it must considered before use? these questions would strongly indicate whether or not resolving the issue requires a design consideration. (I do not mean how a specific plan may answer these question, but instead how any plan would).
+
+Simply put, my relfection sums to an addition of extra caution and research of both formal and informal channels. Observing the material present at the specific issue at hand may not be enough.
 
 ---
 
