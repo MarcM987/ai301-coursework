@@ -65,21 +65,17 @@ What broke was the unaticipated inclusion of repo forks, throw away repos, and i
 
 **Unit 6: Installed the voice-guard overlay, patched the rubric, and wrote a local repo-memory file for meshtastic/firmware**
 
-[2-4 sentences: the voice-guard, the repo-memory file. What broke or
-fell short, and what changed because of it. "Nothing broke" counts when
-it is true - say how you know.]
-
 Promoted the voice guard as instructed then created the repo-memory file with guidance on the contribution policy, test requirements, scope, and relevant subsystem.
 I gave the memory file my current insights regarding the specifc location of behavior as well based on my reproduction and other issue comments.
 I also made sure to add a note to keep the work honest and properly styled.
 
 
-**Unit 7: [one line on the tool work]**
+**Unit 7: Installed the ship-gate, wrote the gate manifest, and stopped when the issue closed, as intentioned**
 
 [2-4 sentences: the ship-gate and your gate manifest. What it produced
 on your real branch, what fought you, what changed because of it.]
 
-**Unit 8: [one line on the tool work]**
+**Unit 8: Set up the PR-monitor and playbook, but then stopped since no PR exists**
 
 [2-4 sentences: the PR-monitor and your playbook. What it read, what it
 drafted, what you did with the draft.]
