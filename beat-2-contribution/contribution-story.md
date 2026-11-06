@@ -1,4 +1,5 @@
-# Contribution: [Issue Title]
+# Contribution: [Bug]: when starting meshtasticd in sim mode, fails to read/create ssl certs
+ #8213
 
 Path: `beat-2-contribution/contribution-story.md`
 
