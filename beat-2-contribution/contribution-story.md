@@ -523,7 +523,7 @@ So the best PR is simply closing the issue or waiting for a maintainer to direct
 
 **Toolkit**
 
-- Tool:
+- Tool: 
 - What it produced:
 - Difficulties:
 - What changed:
@@ -541,8 +541,11 @@ The skill gained, the knowledge that researching the codebase and documents is n
 
 **Challenges Overcome**
 
-[What was hard and how you solved it; point at the real events, the
-Toolkit blocks above are full of them.]
+The hardest part was knowing what was and wasn't ok to modify in pursuit of my fix.
+while simultaneously determining if a suspected bad behavior was actually a design choice.
+For example resolving my issue was generally straight forward, but the resolution itself countered an undocumented design decision.
+Figuring this out meant finding out where the section of code came from and reading the relevant PR threads to understand not only function, but also intent.
+Then, regardless of my current progress, respecting the design choice and not challenging the maintainer's choices was also critical to respecting the repo and finding the best resolution. 
 
 **What I'd Do Differently Next Time**
 
@@ -559,10 +562,15 @@ Simply put, my relfection sums to an addition of extra caution and research of b
 
 ## Resources Used
 
-[What actually helped, not a reading list. List things this story
-already shows you using: the doc you followed to set the environment
-up, the thread that explained the bug, the person who answered you.
-One real entry beats ten plausible ones.]
+These are the specific things used while investigating and documenting the issue:
 
-- [Link to documentation that helped]
-- [Discussion, issue, or post that helped]
+- https://github.com/meshtastic/firmware/issues/8213
+original report, logs, and collaborator comments pointing at the early return and config-loading if/else-if in PortduinoGlue.cpp
+- https://github.com/meshtastic/firmware/pull/11348
+the merged change that honors an explicit `-c` under `-s` while keeping bare `--sim` from auto-discovering config; the reference that closed this issue
+- https://github.com/meshtastic/firmware/blob/develop/src/platform/portduino/PortduinoGlue.cpp
+current `portduinoSetup` implementation (config chain, force_simradio override, and the early return)
+- https://github.com/meshtastic/firmware/blob/master/CONTRIBUTING.md
+contribution process, CLA, and trunk formatting expectation
+- https://meshtastic.org/docs/development/firmware/build/
+PlatformIO build setup used for the native/portduino target and reproduction
