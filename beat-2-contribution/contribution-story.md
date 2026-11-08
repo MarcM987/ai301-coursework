@@ -73,13 +73,16 @@ I also made sure to add a note to keep the work honest and properly styled.
 
 **Unit 7: Installed the ship-gate, wrote the gate manifest, and stopped when the issue closed, as intentioned**
 
-[2-4 sentences: the ship-gate and your gate manifest. What it produced
-on your real branch, what fought you, what changed because of it.]
+I installed the ship-gate and filled ship-manifest.md with the project’s pre-PR checks (formatting and the relevant native/config commands).
+On my branch the gate ran the manifest checks cleanly and then ran pr-precheck against the plan and evidence. 
+However, the package was no longer a fix, after #11348 and my own testing the early return and skipped config discovery under bare --sim are intentional, and the maintainer closed the issue as resolved after I explained that. 
+I updated the plan and evidence to document that conclusion instead of forcing a PR.
 
 **Unit 8: Set up the PR-monitor and playbook, but then stopped since no PR exists**
 
-[2-4 sentences: the PR-monitor and your playbook. What it read, what it
-drafted, what you did with the draft.]
+I prepared the PR-monitor and the playbook for the contribution (what to watch, how to draft replies, when to escalate). 
+Because the issue was closed as resolved by #11348 before I opened a PR, the monitor had nothing to read and the playbook produced no drafts. 
+I recorded that outcome in the story rather than inventing a PR thread, and I kept the playbook ready in case a related follow-up appears later.
 
 ---
 
