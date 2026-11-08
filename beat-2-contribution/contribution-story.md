@@ -12,7 +12,8 @@ files and no evidence uploads are part of Assignment 5.
 **Student:** Marc Martinez
 **GitHub Username:** MarcM987
 **Issue:** https://github.com/meshtastic/firmware/issues/8213
-**Pull Request:** [GitHub PR link, once opened]
+**Pull Request:** https://github.com/meshtastic/firmware/issues/8213
+(Issue link again, because issue was closed without a PR)
 
 One repository, built across units 5 to 8, telling the whole story of your real
 contribution. Fill it as you work, not at the end — the sections below ask for evidence that
@@ -516,8 +517,9 @@ So the best PR is simply closing the issue or waiting for a maintainer to direct
 **Maintainer Feedback:**
 
 - [10/29/2026]: No Response from the mainainer yet. 
+- [11//2026]: My issue resolution was confirmed and the issue was closed by maintainer.
 
-**Status:** Awaiting review.
+**Status:** Issue closed by maintainer.
 
 **Toolkit**
 
